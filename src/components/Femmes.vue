@@ -1,0 +1,211 @@
+<template>
+  <div class="container">
+     <router-view/>
+    <h1>Vêtements pour Femmes</h1>
+    <div class="row mt-5" id="1">
+      <div class="col-md-4" v-for="Womenproduct in Womenproducts" :key="Womenproduct.id">
+        <div class="card mb-4 product">
+          <img
+            class="card-img-top productImg"
+            :src="Womenproduct.image"
+            :alt="Womenproduct.title"
+          />
+          <div class="card-body">
+            <h4 class="text-uppercase text-muted">{{ Womenproduct.category }}</h4>
+            <p class="card-title">{{ Womenproduct.title }}</p>
+            <div class="d-flex justify-content-between">
+              <p class="fs-5 fw-bolder price">{{ Womenproduct.price }} Euro</p>
+              <b-button @click="displayModal(Womenproduct)">Buy Now</b-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <b-modal
+        ref="Women-modal"
+        class="modal-title"
+        title="Mauricode-Academy"
+        size="lg"
+        :header-bg-variant="headerBgVariant"
+        :header-text-variant="headerTextVariant"
+      >
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div id="outputCardDetails">
+                  <div class="card mb-5 product" id="3">
+                    <img
+                      class="card-img-top productImg"
+                      :src="WomenproductCard.image"
+                      :alt="WomenproductCard.title"
+                      style="height: auto"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div id="outputCardBody">
+                  <h4 class="text-uppercase text-muted card-text">
+                   {{ WomenproductCard.category }}
+                  </h4>
+                  <p class="card-title"> {{ WomenproductCard.title }}</p>
+                  <p class="description" style="display: block">
+                    {{ WomenproductCard.description}}
+                  </p>
+                  <div class="d-flex justify-content-between">
+                    <p class="fs-5 fw-bolder price"> {{ WomenproductCard.price }} Euro</p>
+                    </div>
+                </div>
+                <form id="formModale">
+                  <div class="mb-3 row">
+                    <div class="col-sm-2">
+                      <label for="inputStateSize" class="form-label fw-bolder"
+                        >Size</label
+                      >
+                    </div>
+                    <div class="col-sm-8">
+                      <select id="inputStateSize" class="form-select">
+                        <option value="15">15</option>
+                        <option value="25">25</option>
+                        <option value="40">40</option>
+                        <option value="45">45</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <div class="col-sm-2">
+                      <label for="inputStateColor" class="form-label fw-bolder"
+                        >Color</label
+                      >
+                    </div>
+                    <div class="col-sm-8">
+                      <select id="inputStateColor" class="form-select">
+                        <option value="red">Red</option>
+                        <option value="black">Black</option>
+                        <option value="brown">Brown</option>
+                        <option value="gray">Gray</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <button
+                      type="button"
+                      id="btnNumProductDown"
+                      class="btn btn-outline-danger trans-04"
+                    >
+                      <i class="fs-6 bi bi-dash-square"></i>
+                    </button>
+                    <input
+                      class="text-center num-product"
+                      type="text"
+                      id="numberProduct"
+                      name="num-product"
+                    />
+                    <button
+                      type="button"
+                      id="btnNumProductUp"
+                      class="btn btn-outline-success trans-04"
+                    >
+                      <i class="fs-6 bi bi-plus-square"></i>
+                    </button>
+                  </div>
+                  <div class="text-center mt-2">
+                    <button
+                      type="submit"
+                      class="btn btn-outline-success trans-04"
+                    >
+                      Add to cart
+                    </button>
+                  </div>
+                </form>
+                <div class="mt-3 socilalLink text-center">
+                  <ul>
+                    <li><i class="fs-3 text-primary bi bi-facebook"></i></li>
+                    <li><i class="fs-3 text-primary bi bi-twitter"></i></li>
+                    <li><i class="fs-3 text-danger bi bi-instagram"></i></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </b-modal>
+    </div>
+  </div>
+</template>
+
+<script>
+import { db } from "../firebase";
+export default {
+  name: "Femme",
+  data() {
+    return {
+      headerBgVariant: 'primary',
+      headerTextVariant: 'light',
+      Womenproducts: [],
+      Womenproduct: {
+        category: null,
+        description: null,
+        image: null,
+        price: null,
+        title: null,
+        rate: {
+          count: null,
+          rate: null,
+        },
+      },
+      WomenproductCard: {
+        category: null,
+        description: null,
+        image: null,
+        price: null,
+        title: null,
+        rate: {
+          count: null,
+          rate: null,
+        },
+      },
+    };
+  },
+
+  methods: {
+    displayModal(Womenproduct) {
+      this.WomenproductCard = Womenproduct;
+      this.$refs["Women-modal"].show();
+    },
+  },
+  created() {
+    db.collection("products")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            let Category = doc.data().category;
+            if(Category === "women's clothing"){
+              this.Womenproducts.push(doc.data());
+            }
+        });
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
+  },
+};
+</script>
+<style lang="scss" scoped>
+.product {
+  padding: 20px;
+}
+.productImg {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+.card-title {
+  height: 25px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
