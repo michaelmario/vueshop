@@ -14,7 +14,6 @@ import HelloWorld from '@/components/HelloWorld.vue'
 import Banner from '@/components/Banner.vue'
 import Blog from '@/components/Blog.vue'
 import Contact from '@/components/Contact.vue'
-//import GoogleMap from '@/components/GoogleMap.vue'
 
 export default {
   name: 'Home',
@@ -23,8 +22,9 @@ export default {
     Banner,
     Blog,
     Contact,
-   // GoogleMap
-   
+     
+  },
+  methods:{
   }
 }
 </script>

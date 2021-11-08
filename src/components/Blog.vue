@@ -1,7 +1,7 @@
 <template>
-  <section>
-      <div class="container mt-5" id="blog" data-aos="zoom-in">
-          <h1>BLOG</h1>
+  <section class="mt-5">
+      <div class="container blog" id="blog" data-aos="zoom-in">
+          <h1 class="mb-3">BLOG</h1>
           <div v-for="blog in blogs" :key="blog.id">
           <div class="row">  
           <div  class="col-md-3">
@@ -74,7 +74,9 @@ section{
     margin-top:150px;    
 }
 #blog{
-    padding-top:70px;
+    margin-top:100px;
+    padding-top:150px;
+    margin-bottom:100px;
 }
 .responImg{
    width:200 !important;

@@ -1,6 +1,6 @@
 <template>
   <div class="outer-cart-wrapper">
-    <div class="carty--loading th-removed">
+     <div class="carty--loading th-removed">
       <div id="rect-1" class="rect"></div>
       <div id="rect-2" class="rect"></div>
       <div id="rect-3" class="rect"></div>
@@ -8,15 +8,18 @@
     </div>
     <div class="cart-wrapper">
       <button class="btn btn-outline-success carty--close" @click="close()">
-        <span>close</span>
+        <span>Fermer</span>
       </button>
-      <p class="headline">Your Cart</p>
-      <!-- This is the outer container for each item in the cart -->
+      <div >
+       
+      </div>
+      <p class="headline">Votre Cart</p>
+            <!-- This is the outer container for each item in the cart -->
       <section class="carty--empty">
-        <h2>Your cart is empty</h2>
+        <h2>Votre cart est vide</h2>
         <p>
           <a href="#" class="carty--close"  @click="close()"
-            >Continue shopping</a
+            >Continuer vos achats</a
           >
         </p>
       </section>
@@ -24,8 +27,11 @@
   </div>
 </template>
 <script>
+
 export default {
     name:'Aside',
+    components:{    
+    },
      data(){
         return{
           active: false,
@@ -47,7 +53,7 @@ export default {
     overflow-y: auto;
     width: 0rem;
     max-width: 52rem;
-    position: fixed;
+    position:fixed;
     right: 0;
     top: 0;
     height: 100%;
@@ -72,7 +78,7 @@ export default {
 .cart-wrapper .headline {
     font-weight: 700;
     font-size: 2rem;
-    line-height: 2;
+    line-height:1;
     margin: 0;
     padding: 1rem 2rem;
 }
@@ -97,5 +103,17 @@ export default {
 }
 .th-removed {
     display: none!important;
+}
+@media (max-width:768px){
+  .outer-cart-wrapper{
+    position:absolute;
+  }
+  .cart-wrapper .headline {
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin: 0;
+    padding: 1rem 2rem;
+}
 }
 </style>

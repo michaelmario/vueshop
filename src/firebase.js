@@ -1,6 +1,6 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firestore'
+import  firebase from 'firebase';
+import "firebase/auth"
+import "firebase/firestore"
 import 'firebase/storage'
 // replace the values with your firebase config
 const firebaseConfig = {
@@ -16,13 +16,13 @@ firebase.initializeApp(firebaseConfig)
 
 // utils
 const db = firebase.firestore();
-const auth = firebase.auth
+const FA = firebase.auth;
 const storage = firebase.storage()
 const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 export {
     db,
-    auth,
+    FA,
     storage, 
     timestamp  
 }

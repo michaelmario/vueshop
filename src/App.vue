@@ -10,48 +10,53 @@
 import Header from "./components/HeadNav.vue"
 import Footer from "./components/Footer.vue"
 import GoogleMap from '@/components/GoogleMap.vue'
+import {FA} from "./firebase";
 export default {
   name: "App",
+  data() {
+    return {
+        user:[],
+
+    };
+  },
+
   components:{
    Footer,
    Header,
    GoogleMap
+  },
+  created() {
+    FA().onAuthStateChanged(user => {
+       user = FA().currentUser;
+      if(user !== null){
+       user.providerData.forEach((profile) => {        
+         let userData = {
+            "Sign-in provider": profile.providerId,
+            "Provider-specific UID": profile.uid,
+            "Name": profile.displayName,
+            "Email":profile.email,
+            "Photo URL": profile.photoURL
+           }
+         this.user.push(userData);
+         sessionStorage.setItem('userData',JSON.stringify(this.user));
+  }); 
+    
+
+}
+    })
   }
 }
 </script>
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap');
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; 
   color: #2c3e50;
+  background-color:#cccccc96;
 }
 
-.container-menu-desktop {
-  height: auto;
-  width: 100%;
-  position: relative;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-}
-.wrap-menu-desktop {
-  position: fixed;
-  z-index: 1100;
-  background-color: transparent;
-  width: 100%;
-  height: 84px;
-  top: 40px;
-  left: 0;
-  transition: height 0.3s, background-color 0.3s;
-}
-.limiter-menu-desktop {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  background-color: transparent;
-}
 .navbar {
   height: 100px;
   border-bottom: 2px solid #cccccc;
@@ -60,6 +65,7 @@ export default {
   font-size: 1rem;
   text-transform: uppercase;
   color: black !important;
+  font-family: 'Playfair Display', serif;
 }
 .nav-link:hover {
   color: rgb(219, 180, 50) !important;
@@ -113,7 +119,7 @@ a {
 }
  @media (max-width: 768px) {
     .mobileContainer{
-      margin-top:0px;
+      margin-top:-153px;
     }
     .navbar-collapse {
     flex-basis: 100%;
@@ -157,9 +163,5 @@ a {
      .titleOverview {
       height: 322px;
      }
-    #firstSection {
-      padding-top:0rem;
-      height:0px;
-    }
- }
+     }
 </style>

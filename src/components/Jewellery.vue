@@ -14,7 +14,7 @@
             <p class="card-title">{{ jewelProduct.title }}</p>
             <div class="d-flex justify-content-between">
               <p class="fs-5 fw-bolder price">{{ jewelProduct.price }} Euro</p>
-              <b-button @click="displayModal(jewelProduct)">Buy Now</b-button>
+              <b-button variant="success" @click="displayModal(jewelProduct)">Acheter</b-button>
             </div>
           </div>
         </div>
@@ -22,12 +22,13 @@
     </div>
     <div>
       <b-modal
-        ref="men-modal"
+        ref="jewel-modal"
         class="modal-title"
         title="Mauricode-Academy"
         size="lg"
         :header-bg-variant="headerBgVariant"
         :header-text-variant="headerTextVariant"
+        hide-footer
       >
         <!-- Modal content-->
         <div class="modal-content">
@@ -67,33 +68,20 @@
                     </div>
                     <div class="col-sm-8">
                       <select id="inputStateSize" class="form-select">
-                        <option value="15">15</option>
-                        <option value="25">25</option>
-                        <option value="40">40</option>
-                        <option value="45">45</option>
-                      </select>
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                        </select>
                     </div>
                   </div>
                   <div class="mb-3 row">
-                    <div class="col-sm-2">
-                      <label for="inputStateColor" class="form-label fw-bolder"
-                        >Color</label
-                      >
-                    </div>
-                    <div class="col-sm-8">
-                      <select id="inputStateColor" class="form-select">
-                        <option value="red">Red</option>
-                        <option value="black">Black</option>
-                        <option value="brown">Brown</option>
-                        <option value="gray">Gray</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="d-flex justify-content-center">
+                        </div>
+                  <div class="d-flex">
                     <button
                       type="button"
                       id="btnNumProductDown"
-                      class="btn btn-outline-danger trans-04"
+                      class="btn btn-danger mr-1 trans-04"
+                       @click="decreaseCount()"
                     >
                       <i class="fs-6 bi bi-dash-square"></i>
                     </button>
@@ -102,21 +90,23 @@
                       type="text"
                       id="numberProduct"
                       name="num-product"
+                      v-model="jewelProductCard.quantity"
                     />
                     <button
                       type="button"
                       id="btnNumProductUp"
-                      class="btn btn-outline-success trans-04"
+                      class="btn btn-success ml-1 trans-04"
+                       @click="increaseCount()"
                     >
                       <i class="fs-6 bi bi-plus-square"></i>
                     </button>
                   </div>
-                  <div class="text-center mt-2">
+                  <div class="mt-2">
                     <button
                       type="submit"
-                      class="btn btn-outline-success trans-04"
+                      class="btn btn-success trans-04"
                     >
-                      Add to cart
+                      Acheter Maintenant
                     </button>
                   </div>
                 </form>
@@ -144,6 +134,7 @@ export default {
     return {
       headerBgVariant: 'primary',
       headerTextVariant: 'light',
+      count:1,
       jewelProducts: [],
      jewelProduct: {
         category: null,
@@ -151,6 +142,7 @@ export default {
         image: null,
         price: null,
         title: null,
+        quantity: null,
         rate: {
           count: null,
           rate: null,
@@ -162,6 +154,7 @@ export default {
         image: null,
         price: null,
         title: null,
+        quantity: null,
         rate: {
           count: null,
           rate: null,
@@ -175,15 +168,28 @@ export default {
       this.jewelProductCard = jewelProduct;
       this.$refs["jewel-modal"].show();
     },
+     decreaseCount(){
+     if(this.jewelProductCard.quantity != 1 ){
+      this.jewelProductCard.quantity --;
+    }
+    
+    },
+    increaseCount(){
+     if(this.jewelProductCard.quantity <= 9 ){
+      this.jewelProductCard.quantity ++;
+    }
+    }
   },
   created() {
     db.collection("products")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-            let MenCategory = doc.data().category;
-            if(MenCategory === "jewelery"){
-            this.jewelProducts.push(doc.data());
+            let Category = doc.data().category;
+            if(Category === "jewelery"){
+              let jewelProductsData = doc.data();
+             let NewjewelData = {...jewelProductsData, quantity: this.count};
+          this.jewelProducts.push(NewjewelData);
               }
          
         });

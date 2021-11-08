@@ -1,7 +1,7 @@
 <template>
-  <section>
+  <section class="contact">
     <div class="container" id="contact">
-      <h1>CONTACT</h1>
+      <h1 class="mt-5 mb-3">CONTACT</h1>
       <div class="row">
         <div class="col-md-6 p-4 p-md-5 mb-4">
           <h1 class="display-8 fst-italic">Let's talk</h1>
@@ -175,6 +175,12 @@ export default {
 section {
   min-height: 350px;
   padding-top: 20px;
+}
+.contact{
+  margin-top:100px;
+}
+#contact{
+  margin-top:100px;
 }
 .logo {
   width: 100%;

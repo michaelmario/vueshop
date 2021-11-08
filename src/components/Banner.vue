@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid mt-5 mobileContainer">
+  <div class="container-fluid mobileContainer">
     <div class="pre-load">
       <div class="container">       
         <div class="row" id="banner">
@@ -49,7 +49,7 @@
           </div>
           <div class="col-md-4">
             <div class="card cardProduct"
-            data-aos="fade-left" data-aos-easing="ease-in-sine">
+            data-aos="fade-down" data-aos-easing="ease-in-sine">
               <div class="img__wrap">
                 <a href="product.html" class="text-decoration-none text-black">
                   <div class="producCardbody">
@@ -176,7 +176,8 @@ section{
 }
 .titleOverview {
   height: 150px;
-  margin-top: 10rem;
+  margin-top:10rem;
+  padding:10px;
 }
 .navbarProduct {
   border-top: 2px solid #cccccc;

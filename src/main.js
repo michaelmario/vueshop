@@ -5,11 +5,10 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import router from './router'
 import store from './store'
 import  './firebase'
-import {auth} from './firebase'
+import {FA} from './firebase'
 import VueAos from 'aos'
 import 'aos/dist/aos.css'
-
-
+import '../public/scss/style.scss'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
@@ -32,7 +31,7 @@ Vue.use(IconsPlugin)
 Vue.config.productionTip = false
 let app = '';
 
-auth().onAuthStateChanged(function(user) {
+FA().onAuthStateChanged(function(user) {
   if(!app){
     app = new Vue({
     render: h => h(App),

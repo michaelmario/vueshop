@@ -14,7 +14,7 @@
             <p class="card-title">{{ electProduct.title }}</p>
             <div class="d-flex justify-content-between">
               <p class="fs-5 fw-bolder price">{{ electProduct.price }} Euro</p>
-              <b-button @click="displayModal(electProduct)">Buy Now</b-button>
+              <b-button variant="success" @click="displayModal(electProduct)">Acheter</b-button>
             </div>
           </div>
         </div>
@@ -22,7 +22,7 @@
     </div>
     <div>
       <b-modal
-        ref="men-modal"
+        ref="elect-modal"
         class="modal-title"
         title="Mauricode-Academy"
         size="lg"
@@ -59,20 +59,7 @@
                     </div>
                 </div>
                 <form id="formModale">
-                  <div class="mb-3 row">
-                    <div class="col-sm-2">
-                      <label for="inputStateSize" class="form-label fw-bolder"
-                        >Size</label
-                      >
-                    </div>
-                    <div class="col-sm-8">
-                      <select id="inputStateSize" class="form-select">
-                        <option value="15">15</option>
-                        <option value="25">25</option>
-                        <option value="40">40</option>
-                        <option value="45">45</option>
-                      </select>
-                    </div>
+                  <div class="mb-3 row">                  
                   </div>
                   <div class="mb-3 row">
                     <div class="col-sm-2">

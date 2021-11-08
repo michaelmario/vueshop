@@ -14,7 +14,7 @@
             <p class="card-title">{{ product.title }}</p>
             <div class="d-flex justify-content-between">
               <p class="fs-5 fw-bolder price">{{ product.price }} Euro</p>
-              <b-button @click="displayModal(product)">Buy Now</b-button>
+              <b-button variant="success" @click="displayModal(product)">Acheter</b-button>
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@
         size="lg"
         :header-bg-variant="headerBgVariant"
         :header-text-variant="headerTextVariant"
-      >
+         hide-footer>
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-body">
@@ -99,7 +99,7 @@
                     <button
                       type="button"
                       id="btnNumProductDown"
-                      class="btn btn-danger trans-04"
+                      class="btn btn-danger mr-1 trans-04"
                       @click="decreaseCount()"
                        >
                       <i class="fs-6 bi bi-dash-square"></i>
@@ -113,7 +113,7 @@
                     <button
                       type="button"
                       id="btnNumProductUp"
-                      class="btn btn-outline-success trans-04"
+                      class="btn btn-success ml-1 trans-04"
                        @click="increaseCount()"
                     >
                       <i class="fs-6 bi bi-plus-square"></i>
@@ -123,9 +123,9 @@
                   <div class="mt-4">
                     <button
                       type="button"
-                      class="btn btn-outline-success trans-04"
+                      class="btn btn-success trans-04"
                       @click="getDataModal(productCard)">
-                      Add to cart
+                      Acheter Maintenant
                     </button>
                   </div>
                 </form>
@@ -206,8 +206,7 @@ export default {
     
    
   },
-  created() {
-   
+  created() {   
     db.collection("products")
       .get()
       .then((querySnapshot) => {
@@ -237,7 +236,5 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-#numberProduct{
-  width:50px;
-}
+
 </style>

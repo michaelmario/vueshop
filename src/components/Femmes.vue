@@ -15,7 +15,7 @@
             <p class="card-title">{{ Womenproduct.title }}</p>
             <div class="d-flex justify-content-between">
               <p class="fs-5 fw-bolder price">{{ Womenproduct.price }} Euro</p>
-              <b-button @click="displayModal(Womenproduct)">Buy Now</b-button>
+              <b-button  variant="success" @click="displayModal(Womenproduct)">Acheter</b-button>
             </div>
           </div>
         </div>
@@ -90,11 +90,11 @@
                       </select>
                     </div>
                   </div>
-                  <div class="d-flex justify-content-center">
+                  <div class="d-flex">
                     <button
                       type="button"
                       id="btnNumProductDown"
-                      class="btn btn-outline-danger trans-04"
+                      class="btn btn-danger mr-1 trans-04"
                     >
                       <i class="fs-6 bi bi-dash-square"></i>
                     </button>
@@ -107,17 +107,17 @@
                     <button
                       type="button"
                       id="btnNumProductUp"
-                      class="btn btn-outline-success trans-04"
+                      class="btn btn-success ml-1 trans-04"
                     >
                       <i class="fs-6 bi bi-plus-square"></i>
                     </button>
                   </div>
-                  <div class="text-center mt-2">
+                  <div class=" mt-2">
                     <button
                       type="submit"
-                      class="btn btn-outline-success trans-04"
+                      class="btn btn-success trans-04"
                     >
-                      Add to cart
+                       Acheter Maintenant
                     </button>
                   </div>
                 </form>
