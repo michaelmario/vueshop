@@ -2,7 +2,7 @@
   <div class="container">
      <h1>Les Bijoux</h1>
     <div class="row mt-5" id="1">
-      <div class="col-md-4" v-for="jewelProduct in jewelProducts" :key="jewelProduct.id">
+      <div class="col-md-4" v-for="jewelProduct in jewelProducts" :key="jewelProduct.id" >
         <div class="card mb-4 product">
           <img
             class="card-img-top productImg"

@@ -114,9 +114,11 @@ mounted(){
   }
   #consent-popup.hidden {
         opacity: 0;
+        display:none;
     }
      #consent-popup.active {
         opacity: 1;
+        display:block;
     }
    #accept a{
      color:black;

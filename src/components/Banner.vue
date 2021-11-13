@@ -73,70 +73,9 @@
         </div>
       </div>       
     </div>
-    <section id="store">
-    <div class="titleOverview" >
-      <div class="">
-        <h1 class="overview" data-aos="fade-up">PRÉSENTATION DE LA BOUTIQUE EN LIGNE</h1> 
-      </div>
-      <div class="navbarProduct">
-        <ul class="overviewProduct text-dark" data-aos="zoom-in" data-aos-easing="ease-in-sine"> 
-          <li>
-            <button type="button" v-b-toggle.collapse-1 class=" btn btn-outline-success" >TOUS LES PRODUITS</button>
-        </li>
-                     
-          <li>
-            <button type="button" v-b-toggle.collapse-2 class=" btn btn-outline-success" >HOMME</button>
-          </li>
-          <li>
-             <button type="button" v-b-toggle.collapse-3 class=" btn btn-outline-success" > FEMME</button>
-             
-          </li>
-          <li>
-            <button type="button"  v-b-toggle.collapse-4 class=" btn btn-outline-success navLink" >Bijoux</button>
-            
-          </li>
-          <li>
-             <button type="button" v-b-toggle.collapse-5 class=" btn btn-outline-success navLink">Électroniques</button>
-           </li>
-        </ul>
-      </div>
     </div>
-    <div class="col productContainer">      
-      <b-collapse visible id="collapse-1" class="mt-2">
-        <div>
-          <Products />
-        </div>
-      </b-collapse>
-     <b-collapse id="collapse-2" class="mt-2">
-        <div>
-          <Men/>
-        </div>
-      </b-collapse>
-      <b-collapse id="collapse-3" class="mt-2">
-        <div>
-         <Women />
-        </div>
-      </b-collapse>
-      <b-collapse id="collapse-4" class="mt-2">
-        <div>
-          <Jewelery />
-        </div>
-      </b-collapse>
-      <b-collapse id="collapse-5" class="mt-2">
-        <div>
-          <Electronic />
-        </div>
-      </b-collapse>
-    </div>
-    </section>
-  </div>
 </template>
 <script>
-import Products from "./Products.vue";
-import Men from "./Men.vue";
-import Women from "./Femmes.vue";
-import Jewelery from "./Jewellery.vue";
-import Electronic from "./Electronic.vue";
 export default {
   name: "Banner",
   data(){
@@ -146,19 +85,12 @@ export default {
 
   },
   components: {
-    Products,
-    Men,
-    Women,
-    Jewelery,
-    Electronic
+  
   },
   methods:{
-    scroll(){
-      window.scrollTo(0, 1050);
-    },
-  
-  }
-};
+     
+  },
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -174,11 +106,7 @@ section{
   margin-top: 2rem !important;
   justify-content: center;
 }
-.titleOverview {
-  height: 150px;
-  margin-top:10rem;
-  padding:10px;
-}
+
 .navbarProduct {
   border-top: 2px solid #cccccc;
   margin: 10px 0px;
@@ -190,12 +118,7 @@ section{
   list-style: none;
   margin: 12px;
 }
-.overview {
-  font-family: Poppins-Bold;
-  font-size: 36px;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
+
 .productContainer{
   min-height:250px;
   position:relative;

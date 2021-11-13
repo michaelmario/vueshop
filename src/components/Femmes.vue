@@ -4,7 +4,7 @@
     <h1>Vêtements pour Femmes</h1>
     <div class="row mt-5" id="1">
       <div class="col-md-4" v-for="Womenproduct in Womenproducts" :key="Womenproduct.id">
-        <div class="card mb-4 product">
+      <div class="card mb-4 product">
           <img
             class="card-img-top productImg"
             :src="Womenproduct.image"

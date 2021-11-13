@@ -5,6 +5,7 @@
           <CookiesConsent />
         </div>
       </div>
+      <div class="container-fluid text-white">
       <div class="row">
         <div class="col-md-4 text-center text-white">
            <h1 class="text-white pt-1">Apropos</h1>
@@ -17,19 +18,26 @@
         </div>
         <div class="col-md-4  text-white">
            <h1  class="text-white text-center pt-1">Caractéristique du site</h1>
-             <p data-aos="fade-right" data-aos-duration="3000" data-aos-easing="ease-out-cubic">Ce prototype conviendra à votre besoin de débuter dans le<br> " E-Commerce " pas besoin de payer pour " l'hébergement " aucun nom de domaine requis tout est gratuit pour démarrer</p>
-             <p>Tout ce dont vous aurez besoin sont des images de bonne qualité, un titre et une description complets pour attirer vos consommateurs.</p>
-             <p>c'est une opportunité d'avoir une source de revenus supplémentaire et de passer au marketing mondial via Internet et de se débarrasser du micro-écosystème de facebook et de mettre à jour votre site avec un bon " référencement ", qu'il soit organique ou payant</p>
+             <p data-aos="fade-right" data-aos-duration="3000" data-aos-easing="ease-out-cubic">
+               Vous etes entrepreneurs, Artisans ou même petit commerçant et vous souhaitez vous lancer dans le E-commerce ? Cette maquette est l'une des solution que nous pouvons vous apporter afin que vous puissiez développer votre business en ligne.
+               </p>
+               <p>
+                 Pas besoin de payer l'hébergement, aucun nom de domaine n'es requis, tout est gratuit pour bien démarrer. Tout ce dont vous aurez besoin sont des images de qualité, un titre et une belle description pour attirer vos futur clients.
+               </p>
+               <p>
+                 C'est une opportunité d'avoir une source de revenus supplémentaire et de passer au marketing mondial via Internet et de se débarrasser du micro-écosystème de facebook et de mettre en place un bon " référencement " qu'il soit naturel ou payant.
+               </p>
        </div>
-        <div class="col-md-4 text-center text-white ">
+         <div class="col-md-4 text-center text-white">
           <h4 class="pt-2">Nous serions ravi de vous aider </h4>
           <p data-aos="fade" data-aos-duration="3000" data-aos-easing="ease-out-cubic">Demandez un site Web similaire pour répondre à vos besoins</p>
             <p> Nous Contacter au :<br>
               <b-icon icon="telephone-fill" scale="1" variant="success" class="mx-2 my-2">
                 </b-icon>
                 +0262178016 
-                <b-icon icon="phone" scale="2" variant="success" class="mt-2 mx-2 my-2"></b-icon>+0693041147 </p>
-            <p >
+                <b-icon icon="phone" scale="2" variant="success" class="mt-2 mx-2 my-2"></b-icon>+0693041147
+                 </p>
+            <p>
               <a href="mailto:marioachil@gmail.com" rel="noopener" class=" btn btn-outline-success">
                <b-icon icon="envelope" scale="1" class="mt-2 mr-2"></b-icon>
                  Mario Achille</a>
@@ -37,7 +45,9 @@
             <p><input  type="text" value="N° de SIRET	90332750000018" disabled="disabled" class="text-black fw-bloder "></p>
            <b-button href="#nav-collapse" variant="outline-success" class="sticky-top">Back To Top</b-button>
         </div>
-         <hr class="text-white">
+     
+       
+          <hr class="p-1 my-3 seperation">
             <div class="col-md-12 text-white text-center mt-5">
               <h2 class="text-orange  p-5">SUIVEZ-NOUS</h2>
               <ul  class="social-linksd-flex">
@@ -66,9 +76,7 @@
                  <b-icon icon="youtube" variant="danger" scale="2" class="mt-2 mx-3"></b-icon>Youtube</a>
                  </li>
                  </ul>
-              </div>
-        
-       
+              </div>     
         <div class="col-md-12 text-center">
              <ul class="copyList text-white py-3">
               <li>
@@ -97,8 +105,9 @@
              </ul>                   
         </div>        
       </div>
+    </div> 
     </div>
-  
+    
 </template>
 <script>
 import CookiesConsent from './CookiesConsent.vue'
@@ -112,6 +121,10 @@ export default {
 <style lang="scss" scoped>
 .bgPrimary {
   background-color: #007bff !important;
+}
+.seperation{
+  width:100%;
+  background-color: #7c7878a4;
 }
 
 </style>

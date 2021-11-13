@@ -15,4 +15,13 @@ h1{
          padding-top:0rem;
          height: auto;
        }
+       .card-header-tabs{
+        margin-bottom: 10px !important;
+        .nav-link{
+          margin-bottom:20px !important;
+      }
+      .active{
+        color:#000000 !important;
+      }
+    }
    }

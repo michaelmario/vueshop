@@ -3,7 +3,7 @@ import App from './App.vue'
 import './registerServiceWorker'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import router from './router'
-import store from './store'
+//import store from './store'
 import  './firebase'
 import {FA} from './firebase'
 import VueAos from 'aos'
@@ -29,6 +29,8 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
+
+//Vue.component('add-to-cart', require('./components/AddToCart.vue').default);
 let app = '';
 
 FA().onAuthStateChanged(function(user) {
@@ -48,7 +50,7 @@ FA().onAuthStateChanged(function(user) {
     },
  router,
  user,
- store
+ //store
 }).$mount('#app');
     
   }

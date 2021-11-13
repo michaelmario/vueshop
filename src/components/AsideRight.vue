@@ -13,10 +13,8 @@
         <div class="pt-3">
           <div class="container">
             <div class="devContainer ">
-              <figure>
-                <img :src="user.photoURL" alt="webDeveloper" />
-              </figure>
-              <div class="bodyDescription">
+            <b-avatar variant="info" :src="user.photoURL"></b-avatar>
+               <div class="bodyDescription">
                 <h2 class="fw-bolder">{{ user.displayName }}</h2>
                 <strong>Contact: {{ user.email }}</strong>
               </div>

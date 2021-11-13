@@ -2,6 +2,7 @@
   <div class="home" ref="content">
     <HelloWorld />
     <Banner  />
+    <MauriBoutique />
     <Blog />
     <Contact />
    
@@ -14,7 +15,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
 import Banner from '@/components/Banner.vue'
 import Blog from '@/components/Blog.vue'
 import Contact from '@/components/Contact.vue'
-
+import MauriBoutique from '@/components/MauriBoutique.vue'
 export default {
   name: 'Home',
   components: {
@@ -22,9 +23,12 @@ export default {
     Banner,
     Blog,
     Contact,
+    MauriBoutique
      
   },
   methods:{
   }
 }
 </script>
+<style>
+</style>

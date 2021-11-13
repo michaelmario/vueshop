@@ -57,19 +57,7 @@ export default {
   background-color:#cccccc96;
 }
 
-.navbar {
-  height: 100px;
-  border-bottom: 2px solid #cccccc;
-}
-  .nav-link {
-  font-size: 1rem;
-  text-transform: uppercase;
-  color: black !important;
-  font-family: 'Playfair Display', serif;
-}
-.nav-link:hover {
-  color: rgb(219, 180, 50) !important;
-}
+
 .wrap-icon-header {
       padding: 20px;
       margin-left:13%;

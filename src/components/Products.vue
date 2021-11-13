@@ -1,8 +1,14 @@
 <template>
   <div class="container">
-     <h1>Tous Les Produits</h1>
+     <input v-model="searchKey" id="search" type="search" placeholder="Search..." autocomplete="off">
+    <span v-if="searchKey && filteredList.length >= 1 ">
+      {{filteredList.length}} résult<span v-if="filteredList.length >= 2">s</span>
+    </span>
+     <h1>Tous Les Produits</h1>       
     <div class="row mt-5" id="1">
-      <div class="col-md-4" v-for="product in products" :key="product.id" >
+      <div class="col-md-4" v-for="product in filteredList" :key="product.id" data-aos="fade-right"
+     data-aos-offset="300"
+     data-aos-easing="ease-in-sine">
         <div class="card mb-4 product">
           <img
             class="card-img-top productImg"
@@ -62,23 +68,20 @@
                 <form id="formModale">
                   <div v-if="productCard.category != 'electronics'">  
                   <div v-if="productCard.category != 'jewelery'">                                                    
-                  <div class="mb-3 row">                     
+                  <div class="mb-3 row" >                     
                     <div class="col-sm-2">
                       <label for="inputStateColor" class="form-label fw-bolder"
                         >Color</label
                       >
                     </div>
-                    <div class="col-sm-8">
-                      <select id="inputStateColor" class="form-select">
-                        <option value="red">Red</option>
-                        <option value="black">Black</option>
-                        <option value="brown">Brown</option>
-                        <option value="gray">Gray</option>
+                    <div class="col-sm-8">                      
+                      <select id="inputStateColor" class="form-select" v-model="cardcolors">
+                       <option v-for="color in productCard.colors" :key="color" :value="color">{{color}}</option>                                                  
                       </select>
+                      </div>
                     </div>
                   </div>
-                   </div>
-                     
+                  </div>                     
                   <div class="mb-3 row">                   
                     <div class="col-sm-2">                      
                       <label for="inputStateSize" class="form-label fw-bolder">
@@ -86,15 +89,12 @@
                         </label>
                     </div>
                     <div class="col-sm-8">
-                      <select id="inputStateSize" class="form-select">
-                        <option value="sm">sm</option>
-                        <option value="ml">ml</option>
-                        <option value="xl">xl</option>
-                        <option value="xxx">xxx</option>
-                      </select>
+                      <select id="inputStateSize" class="form-select" v-model="cardsize">
+                        <option v-for="size in productCard.size" :key="size" :value="size">{{size}}</option>                       
+                        </select>
                     </div>
                   </div> 
-                   </div>                                                 
+                                                                   
                     <div class="d-flex ">
                     <button
                       type="button"
@@ -127,7 +127,8 @@
                       @click="getDataModal(productCard)">
                       Acheter Maintenant
                     </button>
-                  </div>
+
+                    </div>
                 </form>
               
                 <div class="mt-3 socilalLink text-center">
@@ -152,9 +153,13 @@ export default {
   name: "Products",
   data() {
     return {
+      colors:['black','red','gray'],
       headerBgVariant: 'primary',
       headerTextVariant: 'light',
        count:1,
+        cardcolors:null,
+        cardsize:null,
+         searchKey: '',
       products: [],
       product: {
         category: null,
@@ -162,7 +167,11 @@ export default {
         image: null,
         price: null,
         title: null,
+        colors:{},
+        size:{},
         quantity: null,
+        realPrice: null,
+        id:null,
         rate: {
           count: null,
           rate: null,
@@ -174,7 +183,11 @@ export default {
         image: null,
         price: null,
         title: null,
+        id:null,
         quantity: null,
+       colors:null,
+       size:null,
+        realPrice:0,
          rate:{
           count: null,
           rate: null,
@@ -188,9 +201,14 @@ export default {
       this.productCard = product;
       this.$refs["my-modal"].show();
     },
-    getDataModal(productCard){
-      this.$refs["my-modal"].hide();
-     console.log(productCard);
+    getDataModal(productCard) {
+      let newproductCard = {...productCard, colors: this.cardcolors,size:this.cardsize}
+      let oldData = JSON.parse(localStorage.getItem("cart")) || [];    
+      this.$refs["my-modal"].hide();      
+      oldData.push(newproductCard);
+      localStorage.setItem('cart',JSON.stringify(oldData));
+      window.location.reload(true);
+       console.log(newproductCard);
     },
     decreaseCount(){
      if(this.productCard.quantity != 1 ){
@@ -212,14 +230,21 @@ export default {
       .then((querySnapshot) => {
          querySnapshot.forEach((doc) => {
           let productsData = doc.data();
-          let NewproductsData = {...productsData, quantity: this.count};
+          let NewproductsData = {...productsData, quantity: this.count,realPrice:0};
           this.products.push(NewproductsData);
-        });
+           });
       })
       .catch(function (error) {
         console.log("Error getting documents: ", error);
       });
   },
+    computed:{
+      filteredList() {
+      return this.products.filter((product) => {
+      return  product.category.toLowerCase().includes(this.searchKey.toLowerCase());
+       });
+    },
+    }
 };
 </script>
 <style lang="scss" scoped>

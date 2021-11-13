@@ -43,7 +43,7 @@
                     rounded-circle
                   "
                   id="bage"
-                  >5</span
+                  >{{cart}}</span
                 >
               </span>
             </div>
@@ -68,6 +68,7 @@
     </b-navbar>
     <Aside />
     <AsideRight />
+    
   </div>
 </template>
 <script>
@@ -76,9 +77,10 @@ import AsideRight from "@/components/AsideRight.vue";
 import { FA } from "../firebase";
 export default {
   name: "HeadNav",
+  
   data() {
-    return {
-      user: "",
+    return { 
+      cart:[]    
     };
   },
   components: {
@@ -99,11 +101,32 @@ export default {
      window.location.reload(true);
     },
   },
-  created() {},
+ mounted(){
+ let catrLeng = JSON.parse(localStorage.getItem("cart")) || [];
+ this.cart = catrLeng.length ;
+ }
 };
 </script>
 <style lang="css" scoped>
+.navbar {
+  height: 100px;
+  border-bottom: 2px solid #cccccc;
+}
+  .nav-link {
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: bolder;
+  color: black;
+  font-family: 'Playfair Display', serif;
+}
+.nav-link:hover {
+  color: rgb(219, 180, 50) !important;
+}
 a {
   color: #ffffff;
+}
+.topButton{
+  position:absolute important;
+  
 }
 </style>
