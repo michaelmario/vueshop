@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {FA, db } from './../firebase';
+import {auth, db } from './../firebase';
 import Swal from "sweetalert2";
 const Toast = Swal.mixin({
   toast: true,
@@ -64,8 +64,7 @@ const Toast = Swal.mixin({
       onSubmit(event) {
         event.preventDefault()
         let messages = this.form;
-       FA()
-          .signInAnonymously()
+        auth.signInAnonymously()
           .then(() => {
              db.collection("message").
               add({messages}).then(()=>{

@@ -95,10 +95,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-section{
-    min-height:250px;
-  
-}
 #store{
     padding-top:50px;
 }

@@ -1,4 +1,5 @@
 <template>
+<div>
  <transition name="cart-anim">
   <div class="outer-cart-wrapper">
     <div class="carty--loading th-removed">
@@ -22,7 +23,7 @@
           >
         </p>
       </section>
-      <section class="dataCart">       
+      <main class="dataCart">       
           <div v-if="cart.length > 0" class="shopping-cart" id="shopping-cart">
             <transition-group name="item-anim" tag="div" class="item-group">
               <div
@@ -76,41 +77,199 @@
               <h6>Total articles: {{ itemTotalAmount }}</h6>
             </div>
             <div class="order-button">
-              <button class="btn btn-outline-success">Acheter Maintenant</button>
+               <b-button id="show-btn" class="btn btn-outline-success" @click="showModal(commande)">Acheter Maintenant</b-button>
+             
             </div>
             <p>
         <a href="#" class="cartyClose text-center mt-5 mb-5" @click="close()"
           >Continuer vos achats</a
         >
       </p>
-          </div>
-        
-        
-      </section>
+      </div>        
+      </main>
       
     </div>
-  </div>
+  </div>   
   </transition>
+  <b-modal ref="modalContainer" 
+  hide-footer
+  title="Mauricode-Academy"
+  size="lg"
+  :header-bg-variant="headerBgVariant"
+  :header-text-variant="headerTextVariant"
+  >
+    <div class="modal-content">
+    <div class="modal-body">
+      <div class="d-block text-center" v-if="user">
+        <div class="row">
+        <div class="col">
+        <h3>{{user.displayName}}</h3>
+         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <b-form-group
+        id="input-group-1"       
+        label-for="input-1"        
+      >
+        <b-form-input
+          id="input-1"
+          v-model="user.email"
+          type="email"
+          placeholder="Enter email"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-2"  label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="user.displayName"
+          placeholder="Enter name"
+          required
+        ></b-form-input>
+      </b-form-group>
+      <b-form-group id="input-group-3"  label-for="input-3">
+        <b-form-input
+          id="input-3"
+          v-model="user.displayName"
+          placeholder="Enter name"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-4"  label-for="input-4">
+        <b-form-select
+          id="input-4"
+          v-model="form.payment"
+          :options="payments"
+          placeholder="Payment"
+          required
+        ></b-form-select>
+      </b-form-group>
+
+      <b-form-group id="input-group-5" v-slot="{ ariaDescribedby }">
+        <b-form-checkbox-group
+          v-model="form.checked"
+          id="checkboxes-5"
+          :aria-describedby="ariaDescribedby"
+        >
+         <b-form-checkbox value='False'>Check that out</b-form-checkbox>
+        </b-form-checkbox-group>
+      </b-form-group>
+
+      <b-button type="submit" variant="primary">Envoyer</b-button>
+      
+    </b-form>
+    </div>
+     <div class="col">
+    <b-card class="mt-3" header="Récapitulatif de vos Commandes">
+      <p class="fst-italic">Les frais d'expédition et les frais supplémentaires sont calculés en fonction des valeurs que vous avez saisies.</p>
+      <pre class="d-flex">
+        <label for="Total" class="fwbloder fs4">Total :</label>
+        <input type="text" class="text-center fwbloder fs4" disabled="disabled" :value="cartTotalAmount +'€'">
+      </pre>      
+     <pre class="d-flex">
+       <label for="Total" class="fwbloder fs4">Tax :</label>
+        <input type="text" class="ml-3 text-center fwbloder fs4" disabled="disabled" :value="tax +'€'">
+     </pre>
+    <pre class="d-flex">
+       <label for="Total" class="fwbloder fs4">Expédition :</label>
+        <input type="text" class="text-center fwbloder fs4" disabled="disabled" :value="shipping +'€'">
+    </pre>
+    <pre class="d-flex">
+        <label for="Total" class="fwbloder fs4">Total Final:</label>
+        <input type="text" class="text-center fwbloder fs4" disabled="disabled" :value="finalPrice +'€'">
+      </pre> 
+    </b-card>
+     </div>
+      </div>
+      </div>
+       <div class="d-block text-center" v-else>
+        <h3>username</h3>
+      </div>  
+    </div>
+    </div>     
+    </b-modal>
+</div>
 </template>
 <script>
+import {auth} from "../firebase"
 export default {
   name: "Aside",
-
+  components:{},
   data() {
     return {
+      headerBgVariant: 'primary',
+      headerTextVariant: 'light',
       active: false,
+      finalPrice:0,
+      finalCards:[],
+      shipping:7.99,
+      tax:9,
+      user:'',
       Prices: "",
       liked: [],
       cart: [],
       Total: [],   
       commandes: [],
       commande: {},
-    };
+      form: {
+          email: '',
+          name: '',
+          payment: null,
+          checked: []
+        },
+        payments: [{ text: 'Payments', value: null }, 'Visa Cart', 'Master Cart', '', 'Corn'],
+        show: true
+      }    
   },
   methods: {
+     onSubmit(event) {
+        event.preventDefault()
+        alert(JSON.stringify(this.form))
+      },
+      onReset(event) {
+        event.preventDefault()
+        // Reset our form values
+        this.form.email = ''
+        this.form.name = ''
+        this.form.payment = null
+        this.form.checked = []
+        // Trick to reset/clear native browser form validation state
+        this.show = false
+        this.$nextTick(() => {
+          this.show = true
+        })
+      },
+    getuser(){
+      auth.onAuthStateChanged((userData)=> {
+        this.user = userData;
+       
+      })
+    },
     close() {
       document.querySelector(".outer-cart-wrapper").classList.remove("active");
     },       
+    showModal() {
+      this.finalPrice = 0;
+      let amount = parseFloat(this.cartTotalAmount).toFixed(2);
+     this.finalCards.push({           
+      price: amount,       
+      shipping: this.shipping,
+      taxt:this.tax
+     })     
+      for (let item in this.finalCards) {
+      this.finalPrice =  parseFloat(this.finalCards[item].price) + parseFloat(this.finalCards[item].shipping + this.finalCards[item].taxt);
+      }    
+       this.$refs['modalContainer'].show();
+       this.close();
+      },
+        hideModal() {
+        this.$refs['my-modal'].hide()
+      },
+      toggleModal() {
+        // We pass the ID of the button that we want to return focus to
+        // when the modal has hidden
+        this.$refs['my-modal'].toggle('#toggle-btn')
+      },
     addToCart(commande) {
       // check if already in array
       for (let i = 0; i < this.cart.length; i++) {
@@ -149,9 +308,14 @@ export default {
       },2000)
     })
     }
-    }
+    },
+          
   },
-  computed: {
+  
+
+  computed: { 
+     
+    
     cartTotalAmount() {
       let total = 0;
       for (let item in this.cart) {
@@ -166,9 +330,10 @@ export default {
       }
       return itemTotal;
     },
-  },
+    },
   created() {
     this.cart = JSON.parse(localStorage.getItem("cart")) || [];
+    this.getuser();
   },
 };
 </script>
@@ -198,7 +363,7 @@ export default {
   height: 100%;
   margin: 0 auto;
   position: relative;
-  width: 90%;
+  width: 100%;
   display: block;
   opacity: 1;
 }
@@ -657,6 +822,13 @@ export default {
     transform: scale(1);
   }
 }
+
+ .fwbloder{
+ font-weight: bolder;
+ } 
+ .fs4{
+ font-size:1rem;
+ }
 @media (max-width: 768px) {
   .outer-cart-wrapper {
     position: absolute;

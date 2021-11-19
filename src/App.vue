@@ -1,50 +1,40 @@
 <template>
   <div id="app">
-      <Header />       
+      <Header /> 
+      <Home />      
     <router-view/>
     <GoogleMap />
    <Footer/>
   </div>
 </template>
 <script>
+import Home from "@/views/Home.vue"
 import Header from "./components/HeadNav.vue"
 import Footer from "./components/Footer.vue"
 import GoogleMap from '@/components/GoogleMap.vue'
-import {FA} from "./firebase";
+//import {FA ,db} from "./firebase";
+import { mapGetters } from 'vuex';
 export default {
   name: "App",
   data() {
     return {
-        user:[],
-
+        
     };
   },
 
   components:{
    Footer,
    Header,
+   Home,
    GoogleMap
   },
-  created() {
-    FA().onAuthStateChanged(user => {
-       user = FA().currentUser;
-      if(user !== null){
-       user.providerData.forEach((profile) => {        
-         let userData = {
-            "Sign-in provider": profile.providerId,
-            "Provider-specific UID": profile.uid,
-            "Name": profile.displayName,
-            "Email":profile.email,
-            "Photo URL": profile.photoURL
-           }
-         this.user.push(userData);
-         sessionStorage.setItem('userData',JSON.stringify(this.user));
-  }); 
-    
-
-}
-    })
+  computed: {
+    ...mapGetters(['getUserProfile']),
+    showNav() {
+      return Object.keys(this.getUserProfile).length > 1
+    }
   }
+ 
 }
 </script>
 <style lang="scss">
@@ -67,7 +57,7 @@ export default {
   font-size: 26px;
   line-height: 1;
   cursor: pointer;
-  margin-left: 30px;
+  margin-left:5px;
 }
 .badge{
   position:absolute;
@@ -76,15 +66,13 @@ export default {
   color:#ffffff;
 }
 .navbarProduct{
-  border-top:2px solid #cccccc;
   margin:10px 0px;
-  padding-top:10px;
-  border-bottom:2px solid #cccccc;  
-}
-.navbarProduct .overviewProduct li{
+  padding-top:10px;  
+  .overviewProduct li{
   display: inline-block;
   list-style: none;
   margin-right:10px;
+  }
 }
 h3 {
   margin: 40px 0 0;

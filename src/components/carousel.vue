@@ -8,14 +8,14 @@
       background="#ababab"
       img-width="1024"
       img-height="480"
-      style="text-shadow: 1px 1px 2px #333;"
+      class="carousel"
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
     >
       <!-- Text slides with image -->
       <b-carousel-slide
-        caption="First slide"
-        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
+        caption="Achetez et vendez de tout "
+        text="Publiez facilement votre annonce et partagez-la sur n'importe quel réseau social."
         img-src="/img/xslide-01.jpg"
       ></b-carousel-slide>
 
@@ -62,3 +62,21 @@
     }
   }
 </script>
+<style scoped lang="css">
+.carousel{
+   text-shadow: 1px 1px 2px #333;
+   
+    font-size:30px;
+}
+.carousel-caption {
+    position: absolute;
+    right: 15%;
+    bottom: 50px;
+    left: 15%;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px; 
+    color:#000000 !important;
+    text-align: center;
+}
+</style>

@@ -16,11 +16,21 @@
             :alt="product.title"
           />
           <div class="card-body">
+              <div class="card-icons d-flex xs12 pt-0" >
+                <button class="btn btnStart"  @click="createStar(product)">
+                <i class="bi bi-heart-fill"></i>
+                    {{start}}
+              </button>
+             <div class="d-flex startProduct" :id="product.id">
+              {{ startCount }} 
+               </div>          
+            
+              </div>
             <h4 class="text-uppercase text-muted">{{ product.category }}</h4>
             <p class="card-title">{{ product.title }}</p>
             <div class="d-flex justify-content-between">
               <p class="fs-5 fw-bolder price">{{ product.price }} Euro</p>
-              <b-button variant="success" @click="displayModal(product)">Acheter</b-button>
+              <b-button variant="success" @click="displayModal(product)">Ajouter au panier</b-button>
             </div>
           </div>
         </div>
@@ -156,10 +166,16 @@ export default {
       colors:['black','red','gray'],
       headerBgVariant: 'primary',
       headerTextVariant: 'light',
+      oldData:JSON.parse(localStorage.getItem("cart")) || [],
+      startCount:'',
+       liked:'',
+       likevalue:'',
        count:1,
         cardcolors:null,
         cardsize:null,
          searchKey: '',
+         star:'',
+         btnStart:'',
       products: [],
       product: {
         category: null,
@@ -172,7 +188,7 @@ export default {
         quantity: null,
         realPrice: null,
         id:null,
-        rate: {
+        rating: {
           count: null,
           rate: null,
         },
@@ -197,18 +213,36 @@ export default {
   },
 
   methods: {
+    createStar(product){
+     let startProduct = document.querySelectorAll('.startProduct');
+      let startLength = JSON.parse(localStorage.getItem("start")) || [];       
+       this.startCount = startLength.length;     
+     let starProduct = {
+       "product":product.id,
+       "start": this.start
+     }    
+     startProduct.forEach((star)=>{
+      this.btnStart = star.id;      
+     if(product.id == this.btnStart ||product.id == startLength.product){       
+       let start = document.createElement('i');
+     start.className ="bi bi-heart-fill ml-1";
+     star.append(start);
+     this.oldData.push(starProduct);
+     localStorage.setItem('start',JSON.stringify(this.oldData));
+     console.log(this.oldData);
+           }
+     })
+    },
     displayModal(product) {
       this.productCard = product;
       this.$refs["my-modal"].show();
     },
     getDataModal(productCard) {
       let newproductCard = {...productCard, colors: this.cardcolors,size:this.cardsize}
-      let oldData = JSON.parse(localStorage.getItem("cart")) || [];    
       this.$refs["my-modal"].hide();      
-      oldData.push(newproductCard);
-      localStorage.setItem('cart',JSON.stringify(oldData));
-      window.location.reload(true);
-       console.log(newproductCard);
+      this.oldData.push(newproductCard);
+      localStorage.setItem('cart',JSON.stringify(this.oldData));
+      window.location.reload(true);       
     },
     decreaseCount(){
      if(this.productCard.quantity != 1 ){
@@ -220,11 +254,14 @@ export default {
      if(this.productCard.quantity <= 9 ){
       this.productCard.quantity ++;
     }
-    }
-    
-   
-  },
-  created() {   
+    },
+    getrating(rating){
+      rating.forEach((rate)=>{
+       this.start = rate.rating.rate;
+      })
+    }   
+    },    
+    created() {   
     db.collection("products")
       .get()
       .then((querySnapshot) => {
@@ -232,11 +269,13 @@ export default {
           let productsData = doc.data();
           let NewproductsData = {...productsData, quantity: this.count,realPrice:0};
           this.products.push(NewproductsData);
+          this.getrating(this.products)
            });
       })
       .catch(function (error) {
         console.log("Error getting documents: ", error);
       });
+     
   },
     computed:{
       filteredList() {
@@ -244,8 +283,14 @@ export default {
       return  product.category.toLowerCase().includes(this.searchKey.toLowerCase());
        });
     },
+    
+    },
+    mounted(){    
+       
+    
     }
-};
+    
+    };
 </script>
 <style lang="scss" scoped>
 .product {
@@ -260,6 +305,28 @@ export default {
   height: 25px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.card-icons {
+    display: flex;
+    align-items:self-start;
+    justify-content: space-around;
+    height: 40px;
+}
+.card-icons .like-container input {
+    display: none;
+}
+input:checked + label i {
+    color: #fb2626;
+    animation: heart 1.3s forwards ease;
+}
+.card-icons i {
+    padding: 3px 5px;
+    transition: 0.2s;
+    cursor: pointer;
+    font-size:1rem;
+}
+.bi-suit-heart{
+font-size:16px;
 }
 
 </style>

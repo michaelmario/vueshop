@@ -1,0 +1,251 @@
+https://github.com/aofdev/vue-firebase-auth-vuex/blob/master/src/main.js
+kUPW-CPF3w2_w{-
+  bctb-rzim-sdbl-kftk-dbmn 
+
+
+   mounted(){
+    FA().onAuthStateChanged(user => {
+      if(user){
+       this.user = FA().currentUser; 
+      } 
+    })
+       db.collection("users").doc(this.user.uid).get()
+      .then((userDoc)=>{      
+      if(userDoc.exists){
+        console.log(userDoc)
+      }else{
+         db.collection("users").doc().set(
+           {email:this.user.email,
+            displayName:this.user.displayName,
+            photoUrl: this.user.photoURL,
+            userId:this.user.uid}
+           
+           ).catch((error) => {
+              console.error("Error writing document: ", error);
+           });
+         }
+           
+    });
+  }  
+  
+  FA().onAuthStateChanged(function(user) {
+    if(!app){
+      app = new Vue({
+      render: h => h(App),
+     
+   router,
+   user,
+   store
+  }).$mount('#app');
+      
+    }
+  })
+
+
+
+  //import axios from 'axios';
+import {FA} from '../../firebase'
+
+const state = {
+  user: {} 
+};
+
+const getters = {
+  user (state) {
+    return state.user
+  }
+    
+};
+
+const actions = {
+  signUserUp ({commit}, payload) {
+    commit('setLoading', true)
+    commit('clearError')
+    FA().createUserWithEmailAndPassword(payload.email, payload.password)
+      .then(
+        user => {
+          commit('setLoading', false)
+          const newUser = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL
+          }
+          commit('setUser', newUser)
+        }
+      )
+      .catch(
+        error => {
+          commit('setLoading', false)
+          commit('setError', error)
+          console.log(error)
+        }
+      )
+  },
+  signUserIn ({commit}, payload) {
+    commit('setLoading', true)
+    commit('clearError')
+    FA().signInWithEmailAndPassword(payload.email, payload.password)
+      .then(
+        user => {
+          commit('setLoading', false)
+          const newUser = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL
+          }
+          commit('setUser', newUser)
+        }
+      )
+      .catch(
+        error => {
+          commit('setLoading', false)
+          commit('setError', error)
+          console.log(error)
+        }
+      )
+  },
+  signUserInGoogle ({commit}) {
+    commit('setLoading', true)
+    commit('clearError')
+    FA().signInWithPopup(new FA.GoogleAuthProvider())
+      .then(
+        user => {
+          commit('setLoading', false)
+          const newUser = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL
+          }
+          commit('setUser', newUser)
+        }
+      )
+      .catch(
+        error => {
+          commit('setLoading', false)
+          commit('setError', error)
+          console.log(error)
+        }
+      )
+  },
+  signUserInFacebook ({commit}) {
+    commit('setLoading', true)
+    commit('clearError')
+    FA().signInWithPopup(new FA.FacebookAuthProvider())
+      .then(
+        user => {
+          commit('setLoading', false)
+          const newUser = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL
+          }
+          commit('setUser', newUser)
+        }
+      )
+      .catch(
+        error => {
+          commit('setLoading', false)
+          commit('setError', error)
+          console.log(error)
+        }
+      )
+  },
+  signUserInGithub ({commit}) {
+    commit('setLoading', true)
+    commit('clearError')
+    FA().signInWithPopup(new FA.GithubAuthProvider())
+      .then(
+        user => {
+          commit('setLoading', false)
+          const newUser = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL
+          }
+          commit('setUser', newUser)
+        }
+      )
+      .catch(
+        error => {
+          commit('setLoading', false)
+          commit('setError', error)
+          console.log(error)
+        }
+      )
+  },
+  signUserInTwitter ({commit}) {
+    commit('setLoading', true)
+    commit('clearError')
+    FA().signInWithPopup(new FA.TwitterAuthProvider())
+      .then(
+        user => {
+          commit('setLoading', false)
+          const newUser = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL
+          }
+          commit('setUser', newUser)
+        }
+      )
+      .catch(
+        error => {
+          commit('setLoading', false)
+          commit('setError', error)
+          console.log(error)
+        }
+      )
+  },
+  autoSignIn ({commit}, payload) {
+    commit('setUser', {
+      id: payload.uid,
+      name: payload.displayName,
+      email: payload.email,
+      photoUrl: payload.photoURL
+    })
+  },
+  resetPasswordWithEmail ({ commit }, payload) {
+    const { email } = payload
+    commit('setLoading', true)
+    FA().sendPasswordResetEmail(email)
+    .then(
+      () => {
+        commit('setLoading', false)
+        console.log('Email Sent')
+      }
+    )
+    .catch(
+      error => {
+        commit('setLoading', false)
+        commit('setError', error)
+        console.log(error)
+      }
+    )
+  },
+  logout({commit}){
+    FA().signOut()
+    commit('setUser', null)
+  }
+
+ 
+ 
+};
+
+const mutations = {
+  setUser (state, payload) {
+    state.user = payload
+  }
+};
+
+export default {
+  state,
+  getters,
+  actions,
+  mutations
+};

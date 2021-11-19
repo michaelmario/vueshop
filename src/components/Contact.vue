@@ -1,6 +1,6 @@
 <template>
-  <section class="contact">
-    <div class="container" id="contact">
+  <section class="contact mt-5" id="contact">
+    <div class="container" >
       <h1 class="mt-5 mb-3">CONTACT</h1>
       <div class="row">
         <div class="col-md-6 p-4 p-md-5 mb-4">
@@ -172,16 +172,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-section {
-  min-height: 350px;
-  padding-top: 20px;
-}
-.contact{
-  margin-top:100px;
-}
-#contact{
-  margin-top:100px;
-}
+ #contact{
+    position: relative;
+    top:150px;
+    margin-bottom: 20px;
+ }
 .logo {
   width: 100%;
   height: 200px;

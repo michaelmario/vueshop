@@ -1,5 +1,5 @@
 <template>
-     <div class="container-fluid mt-5">
+     <div class="container-fluid mapContainer">
             <GmapMap
               :center="{ lat: -20.9323098, lng: 55.2927796 }"
               :zoom="15"
@@ -32,3 +32,9 @@ export default {
    
 }
 </script>
+<style lang="scss" scoped>
+.mapContainer{
+ position:relative;
+ top:170px;
+}
+</style>

@@ -4,17 +4,50 @@
       <button class="btn btn-outline-danger carty--close" @click="close()">
         <span>Fermer</span>
       </button>
-      <section class="mt-3" v-if="!user">
+      <section class="mt-3">
         <div class="pt-3">
-          <Connexion />
+            <password-reset
+            v-if="showPasswordReset"
+            :status="resetStatus"
+            @do-close="togglePasswordReset()"
+            @do-reset="resetPassword"
+          ></password-reset>
+          <login-form
+            v-show="showLoginForm"
+            :style="{ display: showPasswordReset ? 'none' : 'block' }"
+            @do-login="login"
+            @toggle-password-reset="togglePasswordReset"
+            @toggle-signup="toggleSignUp"
+          >
+            <p
+              v-if="getInformation && getInformation.signUp"
+              slot="message"
+              class="px-2 bg-green-400 rounded"
+            >
+              {{ getInformation.signUp.message }}
+            </p>
+            <p
+              v-if="getError && getError.login"
+              slot="message"
+              class="px-2 bg-red-400 rounded"
+            >
+              Invalid email/password
+            </p>
+          </login-form>
+          <sign-up-form
+            v-if="showSignUpForm"
+            :status="signUpStatus"
+            @do-signup="signUp"
+            @do-cancel="toggleLogin"
+          />
         </div>
       </section>
-      <section class="mt-3" v-if="user">
+      <section class="mt-3">
         <div class="pt-3">
           <div class="container">
-            <div class="devContainer ">
-            <b-avatar variant="info" :src="user.photoURL"></b-avatar>
-               <div class="bodyDescription">
+            <div class="devContainer">
+              <b-avatar variant="info" :src="user.photoUrl"></b-avatar>
+              <div class="bodyDescription">
                 <h2 class="fw-bolder">{{ user.displayName }}</h2>
                 <strong>Contact: {{ user.email }}</strong>
               </div>
@@ -26,18 +59,31 @@
   </div>
 </template>
 <script>
-import Connexion from "@/components/Connexion.vue";
-import { FA } from "../firebase";
+import { mapGetters } from "vuex";
+import loginForm from "@/components/LoginForm";
+import SignUpForm from "@/components/SignUpForm";
+import PasswordReset from "@/components/PasswordReset";
+
 export default {
   name: "AsideRight",
   components: {
-    Connexion,
+    PasswordReset,
+    loginForm,
+    SignUpForm,
   },
   data() {
     return {
-      active: false,
-      user: "",
+      showLoginForm: true,
+      showSignUpForm: false,
+      showPasswordReset: false,
+      signUpStatus: {},
+      resetStatus: {},
+      user:{}
+     
     };
+  },
+  computed: {
+    ...mapGetters(["getError", "getInformation"]),
   },
   methods: {
     close() {
@@ -45,18 +91,52 @@ export default {
         .querySelector(".outer-cart-wrapper-right")
         .classList.remove("active");
     },
+    toggleLogin() {
+      this.showLoginForm = true;
+      this.showSignUpForm = false;
+      this.showPasswordReset = false;
+    },
+    toggleSignUp() {
+      this.showLoginForm = false;
+      this.showSignUpForm = true;
+      this.showPasswordReset = false;
+    },
+    togglePasswordReset() {
+      this.showPasswordReset = !this.showPasswordReset;
+    },
+    async login(data) {
+      await this.$store.dispatch("login", {
+        email: data.email,
+        password: data.password,
+      });
+    },
+    async signUp(data) {
+      await this.$store.dispatch("signup", {
+        nickname: data.nickname,
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      });
+      this.signUpStatus = this.getError?.signUp || this.getInformation?.signUp;
+    },
+    async resetPassword(data) {
+      await this.$store.dispatch("resetPassword", { email: data.email });
+      this.resetStatus =
+        this.getError?.resetPassword || this.getInformation?.resetPassword;
+    },
   },
-  mounted() {
-    FA().onAuthStateChanged((userdata) => {
-      this.user = userdata;
-    });
-  },
-};
+  watch: {
+    getInformation(newInformation) {
+      newInformation?.signUp && this.toggleLogin();
+    },
+  }
+}
 </script>
 <style scoped>
 .outer-cart-wrapper-right {
-  background: #fff;
-  box-shadow: 0 0 40px rgb(0 0 0 / 80%);
+   background-size: cover; 
+    background-image:url('./../assets/visuals/umbrellas.jpg');
+    box-shadow: 0 0 40px rgb(0 0 0 / 80%);
   overflow-x: hidden;
   overflow-y: auto;
   width: 0rem;
@@ -68,6 +148,7 @@ export default {
   z-index: 1100;
   scrollbar-width: none;
   transition: all 100ms cubic-bezier(0.25, 0.25, 0.84, 0.325);
+  z-index:10;
 }
 .active {
   width: 40%;
@@ -81,7 +162,9 @@ export default {
   position: relative;
   width: 90%;
   display: block;
-  opacity: 1;
+  opacity: 1;  
+   z-index:6;
+  
 }
 .cart-wrapper .headline {
   font-weight: 700;
@@ -97,7 +180,7 @@ export default {
   position: absolute;
   z-index: 2000;
   transition: opacity, 0.2s, linear;
-  top: 1em;
+  top: 10em;
   right: 1em;
 }
 .cart-wrapper .carty--empty {

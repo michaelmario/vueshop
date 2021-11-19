@@ -1,8 +1,12 @@
 <template>
-    <div class="container-fluid bg-dark py-5" id="apropos">
+   <section id="apropos">
+    <div class="container-fluid bg-dark py-5">
       <div class="row">
         <div class="col">
           <CookiesConsent />
+          <div  data-aos="zoom-in-up" data-aos-duration="3000" data-aos-easing="ease-out-cubic"> 
+    <PeekBox/>
+    </div>  
         </div>
       </div>
       <div class="container-fluid text-white">
@@ -75,7 +79,7 @@
                  <a href="https://www.youtube.com/channel/UCHS7z136sAASElz-cHIWAMA" class="text-white">
                  <b-icon icon="youtube" variant="danger" scale="2" class="mt-2 mx-3"></b-icon>Youtube</a>
                  </li>
-                 </ul>
+                 </ul>                   
               </div>     
         <div class="col-md-12 text-center">
              <ul class="copyList text-white py-3">
@@ -103,22 +107,31 @@
                 </a>
               </li>
              </ul>                   
-        </div>        
+        </div>
+              
       </div>
-    </div> 
+      
     </div>
     
+    </div>
+   </section>
 </template>
 <script>
 import CookiesConsent from './CookiesConsent.vue'
+import PeekBox from '@/components/PeekBox.vue'
 export default {
   name: "mainfooter",
   components:{
     CookiesConsent,
+    PeekBox
   }
 };
 </script>
 <style lang="scss" scoped>
+#apropos{
+  position: relative;
+  top:150px;
+}
 .bgPrimary {
   background-color: #007bff !important;
 }

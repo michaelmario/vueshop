@@ -1,4 +1,4 @@
-import  firebase from 'firebase';
+import  firebase from 'firebase/app';
 import "firebase/auth"
 import "firebase/firestore"
 import 'firebase/storage'
@@ -16,14 +16,16 @@ firebase.initializeApp(firebaseConfig)
 
 // utils
 const db = firebase.firestore();
-const FA = firebase.auth;
+const auth = firebase.auth();
 const storage = firebase.storage()
 const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
+// collection references
+const usersCollection = db.collection('users');
 export {
     db,
-    FA,
+    auth,
     storage, 
+    usersCollection,
     timestamp  
 }
 

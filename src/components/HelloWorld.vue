@@ -1,5 +1,5 @@
 <template>
-  <div id="firstSection">
+  <div id="firstSection" class="mtCarousel">
          <Carousel />         
         </div>
 </template>
@@ -23,5 +23,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
+.mtCarousel{
+ margin-top: 5.5rem !important;
+}
 </style>

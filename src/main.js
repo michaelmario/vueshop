@@ -3,9 +3,9 @@ import App from './App.vue'
 import './registerServiceWorker'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import router from './router'
-//import store from './store'
+import store from './store'
 import  './firebase'
-import {FA} from './firebase'
+import {auth} from './firebase'
 import VueAos from 'aos'
 import 'aos/dist/aos.css'
 import '../public/scss/style.scss'
@@ -30,14 +30,14 @@ Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
 
-//Vue.component('add-to-cart', require('./components/AddToCart.vue').default);
-let app = '';
-
-FA().onAuthStateChanged(function(user) {
-  if(!app){
-    app = new Vue({
-    render: h => h(App),
-    mounted() {
+const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+  
+    new Vue({
+      el: '#app',
+      router,      
+      store,
+      render: h => h(App),
+       mounted() {
       VueAos.init({
         // Global settings:
         offset: 120, // offset (in px) from the original trigger point
@@ -48,12 +48,16 @@ FA().onAuthStateChanged(function(user) {
         anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
       })
     },
- router,
- user,
- //store
-}).$mount('#app');
-    
-  }
-})
+      created() {
+        if (firebaseUser) {
+          store.dispatch('fetchUserProfile', firebaseUser);
+        }
+      }
+    })  
+    unsubscribe();
+  });
+
+
+
 
 

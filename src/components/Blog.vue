@@ -1,7 +1,7 @@
 <template>
-  <section class="mt-5">
-      <div class="container blog" id="blog" data-aos="zoom-in">
-          <h1 class="mb-3">BLOG</h1>
+  <section id="blog">
+      <div class="container mt-5" data-aos="zoom-in">
+          <h1 class="mb-3" >BLOG</h1>
           <div v-for="blog in blogs" :key="blog.id">
           <div class="row">  
           <div  class="col-md-3">
@@ -69,14 +69,9 @@ export default {
 }
 </script>
 <style lang="css" scoped>
-section{
-    min-height:350px;
-    margin-top:150px;    
-}
 #blog{
-    margin-top:100px;
-    padding-top:150px;
-    margin-bottom:100px;
+    position: relative;
+    top:150px;
 }
 .responImg{
    width:200 !important;

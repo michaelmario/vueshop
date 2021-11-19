@@ -61,7 +61,6 @@ export default {
 <style lang="css" scoped>
 .titleOverview {
   height: 100px;
-  margin-top:10rem;
   padding:10px;
 }
   .overview {
